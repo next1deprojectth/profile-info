@@ -1,0 +1,846 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NexT1DE · Official Fan Info</title>
+  <meta name="description" content="NexT1DE (NT1) – Official fan info: group profile, members, discography, and gallery." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Background & Utility */
+    body { background: linear-gradient(135deg, #286acd 0%, #a3e4db 50%, #fed1ef 100%); min-height: 100vh; }
+    .noise:before { content: ""; position: fixed; inset: 0; pointer-events: none; opacity: .06; background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="140" height="140" viewBox="0 0 140 140"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="2" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23n)" opacity="0.45"/></svg>'); }
+
+    /* ปุ่มภาษา – selected state ด้วย aria-pressed */
+    .lang-btn[aria-pressed="true"] {
+      background: rgba(255,255,255,.22);
+      color: #fff;
+      box-shadow: 0 3px 10px rgba(0,0,0,.18);
+      transform: translateY(-1px) scale(1.02);
+      border: 1px solid rgba(255,255,255,.6);
+    }
+    .lang-btn { border: 1px solid transparent; }
+
+    @supports (backdrop-filter: blur(2px)) {
+      #langButtons { position: relative; }
+      #langButtons::before {
+        content: "";
+        position: absolute; inset: 0; border-radius: 1rem;
+        box-shadow: inset 0 0 0 1px rgba(255,255,255,.75);
+        pointer-events: none;
+      }
+    }
+
+    #about dt { color: #3d3d3d; }         /* slate-900 */
+    .bg-white\/85 { background: rgba(255,255,255,.85); } /* เฉดขาวจางอ่านง่ายบนภาพพื้นหลัง */
+
+    #aboutDebut ul {
+      padding-left: 1rem;
+      margin-top: 0.25rem;
+    }
+    #aboutDebut li {
+      line-height: 1.6;
+    }
+
+  </style>
+</head>
+
+<body class="text-white antialiased selection:bg-slate-900 selection:text-white noise pt-16">
+  <!-- NAVBAR: fixed + backdrop blur + mobile hamburger -->
+  <nav id="siteNav"
+     class="fixed top-0 left-0 right-0 z-50 transition-all duration-300
+            bg-transparent backdrop-blur-0 border-transparent">
+      <div class="mx-auto flex max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8 py-3">
+      <!-- Brand -->
+      <a href="#top" class="flex items-center">
+        <img id="brandImg" src="./nt1-logo.jpg" alt="NexT1DE" class="h-10 w-10 rounded-full object-cover ring-2 ring-white/70" />
+      </a>
+
+      <!-- Desktop nav -->
+      <div class="hidden md:flex items-center gap-4 text-sm">
+        <a href="#about"   class="hover:opacity-90 px-2" data-i18n="nav_about">ข้อมูลวง</a>
+        <a href="#members" class="hover:opacity-90 px-2" data-i18n="nav_members">สมาชิก</a>
+        <a href="#discog"  class="hover:opacity-90 px-2" data-i18n="nav_discog">ผลงานเพลง</a>
+        <a href="#gallery" class="hover:opacity-90 px-2" data-i18n="nav_gallery">แกลเลอรี</a>
+
+        <!-- Language pills -->
+        <div id="langButtons"
+             class="inline-flex items-center gap-2.5 rounded-2xl border border-white/50
+                    bg-white/10 p-1.5 backdrop-blur supports-[backdrop-filter]:bg-black/25">
+          <button class="lang-btn relative px-2 py-1 rounded-xl text-white/90 hover:bg-white/10 hover:text-white transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70" data-lang="th" aria-pressed="true">ไทย</button>
+          <button class="lang-btn relative px-2 py-1 rounded-xl text-white/90 hover:bg-white/10 hover:text-white transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70" data-lang="en" aria-pressed="false">EN</button>
+          <button class="lang-btn relative px-2 py-1 rounded-xl text-white/90 hover:bg-white/10 hover:text-white transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70" data-lang="zh" aria-pressed="false">中文</button>
+        </div>
+      </div>
+
+      <!-- Mobile hamburger -->
+      <button id="hamburgerBtn"
+              class="md:hidden inline-flex items-center justify-center rounded-lg p-2 ring-1 ring-white/70 bg-black/60"
+              aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+        <svg id="iconOpen" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7h16M4 12h16M4 17h16"/>
+        </svg>
+        <svg id="iconClose" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile menu panel -->
+    <div id="mobileMenu" class="md:hidden hidden border-t border-white/20 bg-black/50 backdrop-blur">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-3 text-sm">
+        <div class="flex flex-col gap-2">
+          <a href="#about"   class="px-2 py-2 rounded-lg hover:bg-white/10" data-i18n="nav_about">ข้อมูลวง</a>
+          <a href="#members" class="px-2 py-2 rounded-lg hover:bg-white/10" data-i18n="nav_members">สมาชิก</a>
+          <a href="#discog"  class="px-2 py-2 rounded-lg hover:bg-white/10" data-i18n="nav_discog">ผลงานเพลง</a>
+          <a href="#gallery" class="px-2 py-2 rounded-lg hover:bg-white/10" data-i18n="nav_gallery">แกลเลอรี</a>
+        </div>
+        <div class="mt-3">
+          <div id="langButtonsMobile"
+               class="inline-flex items-center gap-2.5 rounded-2xl border border-white/50 bg-white/10 p-1.5 backdrop-blur">
+            <button class="lang-btn relative px-2 py-1 rounded-xl text-white/90" data-lang="th" aria-pressed="true">ไทย</button>
+            <button class="lang-btn relative px-2 py-1 rounded-xl text-white/90" data-lang="en" aria-pressed="false">EN</button>
+            <button class="lang-btn relative px-2 py-1 rounded-xl text-white/90" data-lang="zh" aria-pressed="false">中文</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO COVER -->
+  <header id="top" class="relative -mt-16">
+  <div class="relative h-[42vh] md:h-[56vh] lg:h-[64vh]">
+    <img id="heroCover" src="./next1de-cover.jpg"
+         class="absolute inset-0 h-full w-full object-cover object-top shadow-xl" />
+    <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent"></div>
+     <div class="absolute inset-x-0 bottom-8 mx-auto max-w-6xl px-5 sm:px-8 lg:px-12">
+        <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight text-white drop-shadow-sm">NexT1DE</h1>
+        <p class="mt-2 inline-block rounded-full bg-white/15 px-4 py-1 text-sm text-white backdrop-blur" data-i18n="hero_tag">Official Fan Info</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- ABOUT (ปรับเลย์เอาต์ใหม่: mobile อ่านง่าย / desktop เป็น grid) -->
+  <section id="about" class="mx-auto max-w-6xl px-5 sm:px-8 lg:px-12 py-10 anchor">
+    <div class="rounded-2xl border border-white/40 bg-white/10 backdrop-blur-md shadow-xl">
+      <div class="p-6 md:p-8">
+        <!-- ABOUT list (ใหม่) -->
+      <dl class="grid gap-5 md:gap-6 grid-cols-1 md:grid-cols-2">
+      <!-- Item: ชื่อวง -->
+      <div class="rounded-2xl border border-white/60 bg-white/10 text-slate-900 shadow-sm p-4 md:p-5">
+        <div class="grid grid-cols-[28px_1fr] gap-x-2.5">
+          <span class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-slate-100 ring-1 ring-slate-200">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+          </span>
+          <dt class="text-[11px] font-semibold uppercase tracking-wider text-slate-700" data-i18n="group_name_label">ชื่อวง</dt>
+          <dd id="aboutGroupName" class="col-start-2 mt-1 text-base leading-6 text-white"></dd>
+        </div>
+      </div>
+
+      <!-- Item: ความหมายของชื่อวง -->
+      <div class="rounded-2xl border border-white/60 bg-white/10 text-slate-900 shadow-sm p-4 md:p-5">
+        <div class="grid grid-cols-[28px_1fr] gap-x-2.5">
+          <span class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-slate-100 ring-1 ring-slate-200">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M21 12c0 4.418-4.03 8-9 8a9.86 9.86 0 01-4-.8L3 20l.8-4A8.9 8.9 0 013 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+          </span>
+          <dt class="text-[11px] font-semibold uppercase tracking-wider text-slate-700" data-i18n="meaning_label">ความหมายของชื่อวง</dt>
+          <dd id="aboutMeaning" class="col-start-2 mt-1 prose prose-sm max-w-none leading-6 text-white"></dd>
+        </div>
+      </div>
+
+      <!-- Item: เดบิวต์ -->
+      <div class="rounded-2xl border border-white/60 bg-white/10 text-slate-900 shadow-sm p-4 md:p-5">
+        <div class="grid grid-cols-[28px_1fr] gap-x-2.5">
+          <span class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-slate-100 ring-1 ring-slate-200">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3M3 11h18M5 21h14a2 2 0 002-2v-6H3v6a2 2 0 002 2z"/></svg>
+          </span>
+          <dt class="text-[11px] font-semibold uppercase tracking-wider text-slate-700" data-i18n="debut_label">ก่อตั้ง / เดบิวต์</dt>
+          <dd id="aboutDebut" class="col-start-2 mt-1 text-base leading-6 text-white"></dd>
+        </div>
+      </div>
+
+      <!-- Item: สังกัด -->
+      <div class="rounded-2xl border border-white/60 bg-white/10 text-slate-900 shadow-sm p-4 md:p-5">
+        <div class="grid grid-cols-[28px_1fr] gap-x-2.5">
+          <span class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-slate-100 ring-1 ring-slate-200">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7l9-4 9 4-9 4-9-4z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 10l-9 4-9-4M21 14l-9 4-9-4"/></svg>
+          </span>
+          <dt class="text-[11px] font-semibold uppercase tracking-wider text-slate-700" data-i18n="agency_label">สังกัด</dt>
+          <dd id="aboutAgency" class="col-start-2 mt-1 text-base leading-6 text-white"></dd>
+        </div>
+      </div>
+
+      <!-- Item: แฟนคลับ -->
+      <div class="rounded-2xl border border-white/60 bg-white/10 text-slate-900 shadow-sm p-4 md:p-5">
+        <div class="grid grid-cols-[28px_1fr] gap-x-2.5">
+          <span class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-slate-100 ring-1 ring-slate-200">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a4 4 0 016.5-3 4 4 0 016.5 3c0 5-6.5 9-6.5 9S4 11 4 6z"/></svg>
+          </span>
+          <dt class="text-[11px] font-semibold uppercase tracking-wider text-slate-700" data-i18n="fandom_label">แฟนคลับ</dt>
+          <dd id="aboutFandom" class="col-start-2 mt-1 text-base leading-6 text-white"></dd>
+        </div>
+      </div>
+
+      <!-- Item: สีประจำวง -->
+      <div class="rounded-2xl border border-white/60 bg-white/10 text-slate-900 shadow-sm p-4 md:p-5">
+        <div class="grid grid-cols-[28px_1fr] gap-x-2.5">
+          <span class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-slate-100 ring-1 ring-slate-200">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 10l-7 7-4-4 7-7 4 4z"/></svg>
+          </span>
+          <dt class="text-[11px] font-semibold uppercase tracking-wider text-slate-700" data-i18n="colors_label">สีประจำวง</dt>
+          <dd class="col-start-2 mt-1">
+            <div class="flex flex-wrap items-center gap-4">
+              <span class="inline-flex items-center gap-2">
+                <span class="inline-block h-5 w-5 rounded-full ring-1 ring-slate-300" style="background:#286acd"></span>
+                <code class="text-white">#286acd</code>
+              </span>
+              <span class="inline-flex items-center gap-2">
+                <span class="inline-block h-5 w-5 rounded-full ring-1 ring-slate-300" style="background:#a3e4db"></span>
+                <code class="text-white">#a3e4db</code>
+              </span>
+              <span class="inline-flex items-center gap-2">
+                <span class="inline-block h-5 w-5 rounded-full ring-1 ring-slate-300" style="background:#fed1ef"></span>
+                <code class="text-white">#fed1ef</code>
+              </span>
+            </div>
+          </dd>
+        </div>
+      </div>
+
+      <!-- Item: ช่องทางหลัก -->
+      <div class="rounded-2xl border border-white/60 bg-white/10 text-slate-900 shadow-sm p-4 md:p-5 md:col-span-2">
+        <div class="grid grid-cols-[28px_1fr] gap-x-2.5">
+          <span class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-slate-100 ring-1 ring-slate-200">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M22 12h-4l-3 9L9 3 6 12H2"/></svg>
+          </span>
+          <dt class="text-[11px] font-semibold uppercase tracking-wider text-slate-700" data-i18n="socials_label">ช่องทางหลัก</dt>
+          <dd class="col-start-2 mt-1">
+            <div id="groupSocials" class="flex flex-wrap items-center gap-2"></div>
+          </dd>
+        </div>
+      </div>
+    </dl>
+
+
+      </div>
+    </div>
+  </section>
+
+  <!-- MEMBER AVATAR STRIP -->
+  <section id="member-strip" class="anchor bg-white/15">
+    <div class="mx-auto max-w-6xl px-6 sm:px-10 lg:px-16 pt-3 pb-4">
+      <div id="avatarStrip" class="flex items-start justify-between gap-2 sm:gap-4"></div>
+    </div>
+  </section>
+
+  <!-- MEMBERS -->
+  <section id="members" class="mx-auto max-w-6xl px-5 sm:px-8 lg:px-12 py-10 anchor shadow">
+    <div id="membersGrid" class="grid grid-cols-1 lg:grid-cols-2 gap-6"></div>
+  </section>
+
+  <!-- DISCOGRAPHY -->
+  <section id="discog" class="mx-auto max-w-6xl px-5 sm:px-8 lg:px-12 py-10 anchor mt-4">
+    <div class="rounded-2xl border border-white/40 bg-white/10 backdrop-blur-md text-white p-6 md:p-8 shadow-xl">
+      <div class="flex items-center justify-between">
+        <h2 class="text-2xl font-extrabold tracking-tight text-slate-900" data-i18n="discography_title">ผลงานเพลงทั้งหมด</h2>
+      </div>
+      <div class="my-5 h-px w-full bg-white/30"></div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <aside class="lg:col-span-1">
+          <ul id="discogList" class="grid gap-2"></ul>
+        </aside>
+        <div class="lg:col-span-2">
+          <div id="discogPreview" class="rounded-2xl border border-slate-200 bg-white p-3 shadow">
+            <div class="aspect-video w-full overflow-hidden rounded-xl">
+              <iframe id="discogIframe" class="h-full w-full" src="" title="Preview"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+            <div class="p-3">
+              <h3 id="discogTitle" class="text-xl font-bold text-slate-900"></h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery" class="mx-auto max-w-6xl px-5 sm:px-8 lg:px-12 py-10 anchor mt-4">
+    <div class="rounded-2xl border border-white/40 bg-white/10 backdrop-blur-md text-white p-6 md:p-8 shadow-xl">
+      <h2 class="text-2xl font-extrabold tracking-tight pb-2 text-slate-900" data-i18n="gallery_title">แกลเลอรี</h2>
+      <div class="my-5 h-px w-full bg-white/30"></div>
+
+      <div class="rounded-2xl border border-slate-200 bg-white p-3 shadow">
+        <div id="galleryArea" class="relative group select-none">
+          <div class="w-full max-w-4xl mx-auto">
+            <div id="galleryAspect" class="w-full overflow-hidden rounded-xl mx-auto aspect-[3/4]">
+              <img id="galleryMain" class="h-full w-full object-cover object-center"
+                   src="https://placehold.co/900x1200/png?text=NexT1DE+Gallery" alt="Gallery main" />
+            </div>
+          </div>
+
+          <button id="prevBtn" class="opacity-0 group-hover:opacity-100 transition absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-black/40 p-2 text-white">‹</button>
+          <button id="nextBtn" class="opacity-0 group-hover:opacity-100 transition absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-black/40 p-2 text-white">›</button>
+        </div>
+
+        <div id="thumbs" class="mt-4 grid grid-cols-5 sm:grid-cols-7 gap-2 max-w-4xl mx-auto"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lightbox (gallery) -->
+  <div id="galleryLightbox" class="fixed inset-0 z-[999] hidden bg-black/80 backdrop-blur-sm">
+    <button id="glbClose"
+            class="absolute top-3 right-3 text-white/80 hover:text-white text-2xl leading-none px-3 py-1"
+            aria-label="Close">×</button>
+    <div class="w-full h-full flex items-center justify-center p-3">
+      <img id="glbImg" class="max-h-[90vh] max-w-[90vw] object-contain rounded-xl shadow-2xl" alt="Preview"/>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-white/40">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-10 text-sm text-white/90">
+      <div class="flex flex-col items-center justify-between gap-4 sm:flex-row">
+        <div class="flex items-center gap-2">
+          <span class="ml-2 text-black">by NexT1DE Project Thailand</span>
+        </div>
+        <div class="flex flex-wrap items-center gap-2" id="footerSocials"></div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ===== Data =====
+
+    const instagram_icon_url = "https://cdn.pixabay.com/photo/2021/06/15/12/14/instagram-6338393_1280.png"
+    const tiktok_icon_url    = "https://crystalpng.com/wp-content/uploads/2023/05/tiktok-logo-png.png"
+    const weibo_icon_url     = "https://images.icon-icons.com/1753/PNG/512/iconfinder-social-media-applications-16weibo-4102588_113813.png"
+    const x_icon_url         = "https://img.freepik.com/free-vector/twitter-app-new-logo-x-black-background_1017-45425.jpg?semt=ais_hybrid&w=740&q=80"
+    const youtube_icon_url   = "https://img.freepik.com/premium-vector/youtube-color-icons_1209566-1.jpg?semt=ais_hybrid&w=740&q=80"
+
+    const groupSocials = [
+      { handle:'@next1de_official', url:'https://www.instagram.com/next1de_official/', iconUrl:instagram_icon_url },
+      { handle:'@NexT1DEofficial', url:'https://x.com/NexT1DEofficial', iconUrl:x_icon_url },
+      { handle:'@next1de_official', url:'https://www.tiktok.com/@next1de_official', iconUrl:tiktok_icon_url},
+      { handle:'NexT1DE official', url:'https://www.youtube.com/@NexT1DEofficial', iconUrl:youtube_icon_url },
+      { handle:'NexT1DE官博', url:'https://weibo.com/u/7989034930', iconUrl:weibo_icon_url },
+    ];
+
+    const mySocials = [
+      { handle:'@NT1_Project_TH', url:'https://x.com/NT1_Project_TH', iconUrl:x_icon_url }
+    ];
+
+    const members = [
+    {
+      id: "dorn",
+      image: "./dorn.jpg",
+      birthday: "2001-03-05",
+      socials: [
+        {handle:'@dornkhumraj', url:'https://www.instagram.com/dornkhumraj/', iconUrl:instagram_icon_url},
+        {handle:'@dornkhumraj', url:'https://www.tiktok.com/@dornkhumraj', iconUrl:tiktok_icon_url},
+        {handle:'NexT1DE-DORN', url:'https://weibo.com/u/7966010285', iconUrl:weibo_icon_url},
+      ],
+      locale: {
+        th: { stage:"ดรณ์", fullname:"กร คุ้มราช", position:"อันดับ 1 (เซ็นเตอร์)", nationality:"ไทย", fandom:"🐉 / อัลลี่" },
+        en: { stage:"Dorn", fullname:"Korn Khumraj", position:"Rank 1 (Center)", nationality:"Thai", fandom:"🐉 /Alleys" },
+        zh: { stage:"Dorn", fullname:"Korn Khumraj", position:"第1名（中心位）", nationality:"泰国", fandom:"🐉 /Alleys" },
+      }
+    },
+    {
+      id: "thio",
+      image: "./thio.jpg",
+      birthday: "2005-09-05", // ตามข้อมูลล่าสุด: 5 กันยายน 2005
+      socials: [
+        {handle:'@thiothamm', url:'https://www.instagram.com/thiothamm/', iconUrl:instagram_icon_url},
+        {handle:'@thiothaio20', url:'https://www.tiktok.com/@thiothaio20', iconUrl:tiktok_icon_url},
+        {handle:'NexT1DE-THIO', url:'https://weibo.com/u/7968478760', iconUrl:weibo_icon_url},
+        {handle:'@thiothamm', url:'https://x.com/thiothamm', iconUrl:x_icon_url},
+      ],
+      locale: {
+        th: { stage:"ไทโอ", fullname:"ทัมม ควรทรงธรรม", position:"อันดับ 2 (Vocal)", nationality:"ไทย", fandom:"🌻 / ไทออนส์" },
+        en: { stage:"Thi-O", fullname:"Thamm Kuansongtham", position:"Rank 2 (Vocal)", nationality:"Thai", fandom:"🌻 / Thions" },
+        zh: { stage:"Thi-O", fullname:"Thamm Kuansongtham", position:"第2名（主唱）", nationality:"泰国", fandom:"🌻 / Thions" },
+      }
+    },
+    {
+      id: "huyetao",
+      image: "./yetao.jpg",
+      birthday: "2000-09-22",
+      socials: [
+        {handle:'@h_yetao', url:'https://www.instagram.com/h_yetao/', iconUrl:instagram_icon_url},
+        {handle:'@h_yetao', url:'https://www.tiktok.com/@h_yetao', iconUrl:tiktok_icon_url},
+        {handle:'NexT1DE-胡烨韬', url:'https://weibo.com/u/6041673899', iconUrl:weibo_icon_url},
+      ],
+      locale: {
+        th: { stage:"ฮู เย่เทา", fullname:"HU YE TAO", position:"อันดับ 3 (หัวหน้าวง)", nationality:"จีน", fandom:"🍑 / แครอท" },
+        en: { stage:"HU YE TAO", fullname:"HU YE TAO", position:"Rank 3 (Leader)", nationality:"Chinese", fandom:"🍑 / Carrot" },
+        zh: { stage:"胡烨韬", fullname:"", position:"第3名（队长）", nationality:"中国", fandom:"🍑 / Carrot" },
+      }
+    },
+    {
+      id: "shen",
+      image: "./shen.jpg",
+      birthday: "2006-02-07", // ตามข้อมูลล่าสุด: 7 กุมภาพันธ์ 2006
+      socials: [
+        {handle:'@shen.yisheng', url:'https://www.instagram.com/shen.yisheng/', iconUrl:instagram_icon_url},
+        {handle:'@shenyisheng0227', url:'https://www.tiktok.com/@shenyisheng0227', iconUrl:tiktok_icon_url},
+        {handle:'NexT1DE-SHEN申义晟', url:'https://weibo.com/u/6507103706', iconUrl:weibo_icon_url},
+      ],
+      locale: {
+        th: { stage:"เซิน", fullname:"SHEN YI SHENG", position:"อันดับ 4 (Dance)", nationality:"จีน", fandom:"🐶 / โถวซือ" },
+        en: { stage:"SHEN YI SHENG", fullname:"", position:"Rank 4 (Dance)", nationality:"Chinese", fandom:"🐶 / tóu shī" },
+        zh: { stage:"申义晟", fullname:"", position:"第4名（舞蹈）", nationality:"中国", fandom:"🐶 / 头师" },
+      }
+    },
+    {
+      id: "omar",
+      image: "./omar.jpg",
+      birthday: "2009-09-25",
+      socials: [
+        {handle:'@dinomar555', url:'https://www.instagram.com/dinomar555/', iconUrl:instagram_icon_url},
+        {handle:'NexT1DE-OMAR唐奥玛', url:'https://weibo.com/u/7567410828', iconUrl:tiktok_icon_url},
+        {handle:'NexT1DE-OMAR唐奥玛', url:'https://weibo.com/u/7567410828', iconUrl:weibo_icon_url},
+      ],
+      locale: {
+        th: { stage:"โอมาร์", fullname:"OMAR TANG", position:"อันดับ 5 (Dance)", nationality:"จีน", fandom:"🦖 / มาริโอ้" },
+        en: { stage:"OMAR TANG", fullname:"", position:"Rank 5 (Dance)", nationality:"Chinese", fandom:"🦖 / Mario" },
+        zh: { stage:"唐奥玛", fullname:"", position:"第5名（舞蹈）", nationality:"中国", fandom:"🦖 / Mario" },
+      }
+    },
+    {
+      id: "xiong",
+      image: "./xiong.jpg",
+      birthday: "2002-06-29",
+      socials: [
+        {handle:'@xiong_629', url:'https://www.instagram.com/xiong_629/', iconUrl:instagram_icon_url},
+        {handle:'@xongjnlin', url:'https://www.tiktok.com/@xongjnlin', iconUrl:tiktok_icon_url},
+        {handle:'NexT1DE-林锦雄', url:'https://weibo.com/u/6396670398', iconUrl:weibo_icon_url},
+      ],
+      locale: {
+        th: { stage:"ฉง", fullname:"LIN JIN XIONG", position:"อันดับ 6 (Dance)", nationality:"จีน", fandom:"🐻 / ไอแบร์" },
+        en: { stage:"LIN JIN XIONG", fullname:"", position:"Rank 6 (Dance)", nationality:"Chinese", fandom:"🐻 / iBear" },
+        zh: { stage:"林锦雄", fullname:"", position:"第6名（舞蹈）", nationality:"中国", fandom:"🐻 / iBear" },
+      }
+    },
+    {
+      id: "yao",
+      image: "./zihao.jpg",
+      birthday: "2005-07-28",
+      socials: [
+        {handle:'@yaozihao0728', url:'https://www.instagram.com/yaozihao0728/', iconUrl:instagram_icon_url},
+        {handle:'@yaozihao28', url:'https://www.tiktok.com/@yaozihao28', iconUrl:tiktok_icon_url},
+        {handle:'NexT1DE姚梓豪', url:'https://weibo.com/u/2170610937', iconUrl:weibo_icon_url},
+      ],
+      locale: {
+        th: { stage:"เหยา จื่อ หาว", fullname:"YAO ZI HAO", position:"อันดับ 7 (Dance, Rap)", nationality:"จีน", fandom:"🦄 / ม่าม๊า" },
+        en: { stage:"YAO ZI HAO", fullname:"", position:"Rank 7 (Dance, Rap)", nationality:"Chinese", fandom:"🦄 / mama" },
+        zh: { stage:"姚梓豪", fullname:"", position:"第7名（舞蹈，Rap）", nationality:"中国", fandom:"🦄 / " },
+      }
+    },
+  ];
+
+
+    const discography = [
+      { type:'Debut Single', title:'NexT1DE', url:'https://www.youtube.com/watch?v=Z_go-nKzsD4' },
+      { type:'Cover',  title:'Just Say Hello', url:'https://www.youtube.com/watch?v=IpI1NRgVpDg' },
+      { type:'Cover',  title:'晚风定义 Evening Breeze', url:'https://www.youtube.com/watch?v=Uji2ue3zHDgj' },
+      { type:'Album One Heart New Adventure', title:'奔跑在地球的小孩', url:'https://www.youtube.com/watch?v=AQcup_hya_U&list=RDAQcup_hya_U&start_radio=1' },
+      { type:'Album One Heart New Adventure', title:'薄荷夏天Chemistry', url:'https://www.youtube.com/watch?v=lqLOrgEEfI0&list=PLTc4z-cxNxhMOHfN7EcZnLjDivtr2zjby&index=7' },
+      { type:'Album One Heart New Adventure', title:'Take it Easy （大不了）', url:'https://www.youtube.com/watch?v=ReQOIZKuq38&list=PLTc4z-cxNxhMOHfN7EcZnLjDivtr2zjby&index=10' },
+      { type:'Album One Heart New Adventure', title:'Always with You', url:'https://www.youtube.com/watch?v=Fqd8P38IwuQ&list=PLTc4z-cxNxhMOHfN7EcZnLjDivtr2zjby&index=14' },
+    ];
+
+    const gallery = [
+      "./nt1-1.jpg","./nt1-2.jpg","./nt1-3.jpg","./nt1-4.jpg","./nt1-5.jpg",
+      "./nt1-6.jpg","./nt1-7.jpg","./nt1-8.jpg","./nt1-9.jpg","./nt1-10.jpg",
+    ];
+
+    // ===== i18n =====
+    const i18n = {
+      th: { nav_about:"ข้อมูลวง", nav_members:"สมาชิก", nav_discog:"ผลงานเพลง", nav_gallery:"แกลเลอรี", lang:"ภาษา", hero_tag:"Official Fan Info",
+            group_name_label:"ชื่อวง", meaning_label:"ความหมายของชื่อวง", debut_label:"ก่อตั้ง / เดบิวต์", members_count_label:"จำนวนสมาชิก",
+            agency_label:"สังกัด", fandom_label:"อิโมจิ / แฟนคลับ", colors_label:"สีประจำวง", emoji_label:"อิโมจิ", socials_label:"ช่องทางหลัก", position:"ตำแหน่ง",
+            discography_title:"ผลงานเพลงทั้งหมด", gallery_title:"แกลเลอรี" },
+      en: { nav_about:"About", nav_members:"Members", nav_discog:"Discography", nav_gallery:"Gallery", lang:"Language", hero_tag:"Official Fan Info",
+            group_name_label:"Group Name", meaning_label:"Name Meaning", debut_label:"Founded / Debut", members_count_label:"Members",
+            agency_label:"Agency", fandom_label:"Emoji / Fandom", colors_label:"Group Colors", emoji_label:"Emoji", socials_label:"Official Channels", position:"Position",
+            discography_title:"Complete Discography", gallery_title:"Gallery" },
+      zh: { nav_about:"组合资料", nav_members:"成员", nav_discog:"音乐作品", nav_gallery:"相册", lang:"语言", hero_tag:"官方应援资料",
+            group_name_label:"组合名", meaning_label:"团名含义", debut_label:"成立 / 出道", members_count_label:"成员数",
+            agency_label:"经纪公司", fandom_label:"表情符号 / 粉丝名", colors_label:"团体配色", emoji_label:"表情符号", socials_label:"官方账号", position:"在团内的定位",
+            discography_title:"全部音乐作品", gallery_title:"相册" },
+    };
+
+    // ===== About section content (multilingual) =====
+    const aboutContent = {
+      groupName: {
+        th: 'NexT1DE (NT1) / เนกไทด์',
+        en: 'NexT1DE (NT1)',
+        zh: 'NexT1DE (NT1)',
+      },
+      meaning: {
+        th: `NexT1DE มาจากคำว่า <b>Next + Tide</b><br/> หมายถึง “<b>คลื่นลูกใหม่แห่งยุคต่อไป</b>”<br/>
+            สื่อถึงพลังของคนรุ่นใหม่ที่รวมตัวกันเป็นหนึ่งเดียว พร้อมขับเคลื่อนความฝันและสร้างแรงบันดาลใจให้โลกด้วยพลังที่ไม่มีวันหยุดนิ่ง`,
+        en: `NexT1DE comes from <b>“Next + Tide.”</b><br/>
+            It means “<b>The next wave</b>.”<br/>
+            It represents the power of a new generation — united as one, moving forward with unstoppable energy, passion, and dreams to inspire the world.`,
+        zh: `NexT1DE 源自 <b>“Next + Tide”</b>，<br/>
+            意思是「<b>新一代的浪潮</b>」。<br/>
+            象征着新世代的力量，凝聚为一体，像潮水一样不断向前，用梦想与热情激励世界。`,
+      },
+      debut: {
+        th: [
+          'จากรายการ CHUANG ASIA2 (WeTV)',
+          'เดบิวต์วันที่ 6 เมษายน 2568',
+        ],
+        en: [
+          'From the show CHUANG ASIA2 (WeTV)',
+          'Debuted on April 6, 2025',
+        ],
+        zh: [
+          '出自节目《CHUANG ASIA 第二季》（WeTV）',
+          '于2025年4月6日出道',
+        ],
+      },
+      agency: {
+        th: 'Tencent Music Entertainment (TME)',
+        en: 'Tencent Music Entertainment (TME)',
+        zh: 'Tencent Music Entertainment (TME)',
+      },
+      fandom: {
+        th: '🌊 / Ohna (โอนา)',
+        en: '🌊 / Ohna',
+        zh: '🌊 / Ohna',
+      },
+    };
+
+
+    // เติมเนื้อหาให้ส่วน about ตามภาษา
+    function applyAboutContent(lang = currentLang) {
+      const L = (k) => (aboutContent[k]?.[lang]) ?? '';
+      const setText  = (id, txt) => { const el = document.getElementById(id); if (el) el.textContent = txt; };
+      const setHTML  = (id, html)=> { const el = document.getElementById(id); if (el) el.innerHTML = html; };
+
+      setText('aboutGroupName', L('groupName'));
+      setHTML('aboutMeaning',   L('meaning')); // มีบรรทัด/ตัวหนา ใช้ innerHTML
+      setText('aboutAgency',    L('agency'));
+      setText('aboutFandom',    L('fandom'));
+
+      const debutEl = document.getElementById('aboutDebut');
+      const lines = aboutContent.debut[currentLang];
+
+      if (Array.isArray(lines)) {
+        debutEl.innerHTML = `<ul class="list-disc list-inside space-y-1 text-white">
+          ${lines.map(line => `<li>${line}</li>`).join('')}
+        </ul>`;
+      } else {
+        debutEl.textContent = lines;
+      }
+
+    }
+
+    let currentLang = 'th';
+
+    // ===== Helpers =====
+    const fmtDate = (iso) => { try { return new Date(iso).toLocaleDateString(currentLang==='zh'?'zh-CN':currentLang==='th'?'th-TH':'en-US', { year:'numeric', month:'long', day:'numeric' }); } catch { return iso; } };
+    const el = (tag, cls) => { const x = document.createElement(tag); if(cls) x.className = cls; return x; };
+    
+    function socialItem({ iconUrl, url, handle }) {
+      const a = el('a','inline-flex items-center justify-center w-6 h-6 rounded-full overflow-hidden bg-white/15 hover:bg-white/25 transition ring-1 ring-white/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70');
+      a.href = url; a.target = '_blank'; a.rel = 'noreferrer'; a.setAttribute('aria-label', handle || 'social');
+      const ic = el('img','w-full h-full object-cover'); ic.src = iconUrl; ic.alt = handle || 'logo';
+      a.append(ic); return a;
+    }
+
+    // Group & Footer Socials
+    const groupSocWrap = document.getElementById('groupSocials');
+    groupSocWrap.className = 'flex flex-wrap items-center gap-2';
+    groupSocWrap.innerHTML = '';
+    groupSocials.forEach(s => groupSocWrap.append(socialItem(s)));
+
+    const footerSocWrap = document.getElementById('footerSocials');
+    footerSocWrap.className = 'flex flex-wrap items-center gap-2';
+    footerSocWrap.innerHTML = '';
+    mySocials.forEach(s => footerSocWrap.append(socialItem(s)));
+
+    // Avatar strip
+    function renderAvatarStrip(){
+      const strip = document.getElementById('avatarStrip');
+      strip.innerHTML = '';
+      members.forEach(m=>{
+        const loc = m.locale[currentLang] || m.locale.en; // fallback EN
+        const stage = loc.stage || m.locale.en.stage;
+
+        const link = el('a','flex flex-col items-center gap-1'); link.href = `#member-${m.id}`;
+        const avatarWrap = el('div','rounded-full ring-2 ring-white/60 p-0.5');
+        const avatar = el('img','rounded-full object-cover object-top w-12 h-12 sm:w-16 sm:h-16');
+        avatar.src = m.image; avatar.alt = stage;
+        const name = el('div','text-[10px] sm:text-xs font-medium text-white/95'); name.textContent = stage;
+        avatarWrap.append(avatar); link.append(avatarWrap, name); strip.append(link);
+      });
+      strip.classList.add('justify-between');
+      const mq = window.matchMedia('(min-width: 1024px)');
+      function centerDesktop(){ strip.classList.toggle('justify-center', mq.matches); strip.classList.toggle('gap-4', mq.matches); }
+      centerDesktop(); mq.addEventListener('change', centerDesktop);
+    }
+
+    function renderMembers(){
+      const grid = document.getElementById('membersGrid');
+      grid.innerHTML = '';
+      const lightbox = getMemberLightbox();
+      const lbImg = lightbox.querySelector('#lbImg');
+
+      members.forEach(m => {
+        const loc = m.locale[currentLang] || m.locale.en;          // ข้อความตามภาษา
+        const stage = loc.stage || m.locale.en.stage;
+        const fullname = (loc.fullname && loc.fullname.trim()) ? loc.fullname : '';
+        const position = loc.position || m.locale.en.position;
+        const nationality = loc.nationality || m.locale.en.nationality;
+        const fandom = (loc.fandom ?? '').trim();
+
+        const card = el('article','m-2 md:m-3 overflow-hidden rounded-2xl border border-white/40 bg-white/10 backdrop-blur-md shadow-xl');
+        card.id = `member-${m.id}`;
+
+        const row = el('div','flex');
+
+        // IMAGE
+        const imgBox = el('div','p-4 w-2/3');
+        const frame = el('div','mx-auto w-full max-w-xs sm:max-w-sm');
+        const ratio = el('div','aspect-[2/3] w-full overflow-hidden rounded-xl bg-white/60');
+        const imgBtn = el('button','relative w-full h-full group'); imgBtn.type='button';
+        imgBtn.setAttribute('aria-label', `ดูภาพ ${stage}`);
+        const img = el('img','h-full w-full object-cover object-center transition-transform duration-200 group-hover:scale-[1.5]');
+        img.src = m.image; img.alt = stage + ' portrait';
+        const hoverBadge = el('div','pointer-events-none absolute bottom-2 right-2 rounded-md bg-black/40 text-white text-[11px] px-2 py-1 opacity-0 group-hover:opacity-100 transition');
+        hoverBadge.textContent = 'คลิกเพื่อขยาย';
+        imgBtn.append(img, hoverBadge); ratio.append(imgBtn); frame.append(ratio); imgBox.append(frame);
+        imgBtn.addEventListener('click', () => { lbImg.src = m.image; lbImg.alt = stage + ' preview'; lightbox.classList.remove('hidden'); });
+
+        // CONTENT
+        const content = el('div','w-1/2 bg-white/80 text-slate-900 p-5 md:p-7 flex flex-col gap-3');
+        const title = el('h3','text-2xl md:text-3xl font-extrabold leading-tight'); title.textContent = stage;
+        const sub = el('p','text-sm text-slate-700'); sub.textContent = fullname ? fullname : '';
+
+        // info grid
+        const dl = el('dl','grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 text-sm');
+        const infoItem = (label, value) => {
+          const d=el('div');
+          const l=el('div','text-[11px] uppercase tracking-wide text-slate-500'); l.textContent=label;
+          const v=el('div','text-slate-900'); v.textContent = (value && String(value).trim()) ? value : '-';
+          d.append(l,v); return d;
+        };
+
+        dl.append(
+          infoItem( (i18n[currentLang]?.position   ? 'ตำแหน่ง'=== 'ตำแหน่ง' ? (currentLang==='en'?'Position': currentLang==='zh'?'国籍':'ตำแหน่ง') : i18n[currentLang].position : 'Nationality'), position),
+          infoItem( (i18n[currentLang]?.agency_label   ? 'สัญชาติ'=== 'สัญชาติ' ? (currentLang==='en'?'Nationality': currentLang==='zh'?'国籍':'สัญชาติ') : i18n[currentLang].agency_label : 'Nationality'), nationality),
+          infoItem( (currentLang==='en'?'Birthday': currentLang==='zh'?'生日':'วันเกิด'), fmtDate(m.birthday)),
+          infoItem( (currentLang==='en'?'Emoji / Fandom Name': currentLang==='zh'?'表情符号 / 应援名':'อิโมจิ / ชื่อแฟนคลับ'), fandom)
+        );
+
+        // socials
+        const socialGrid = el('div','flex flex-wrap items-center gap-2');
+        m.socials.forEach(s => socialGrid.append(socialItem(s)));
+
+        content.append(title, sub, dl, socialGrid);
+        row.append(imgBox, content); card.append(row); grid.append(card);
+      });
+    }
+
+
+    // Member lightbox (one-time)
+    function getMemberLightbox(){
+      let box = document.getElementById('memberLightbox');
+      if (!box) {
+        box = document.createElement('div');
+        box.id = 'memberLightbox';
+        box.className = 'fixed inset-0 z-[999] hidden bg-black/80 backdrop-blur-sm';
+        box.innerHTML = `
+          <button id="lbClose" class="absolute top-3 right-3 text-white/80 hover:text-white text-2xl leading-none px-3 py-1" aria-label="Close">×</button>
+          <div class="w-full h-full flex items-center justify-center p-3">
+            <img id="lbImg" class="max-h-[90vh] max-w-[90vw] object-contain rounded-xl shadow-2xl" alt="Member preview"/>
+          </div>`;
+        document.body.appendChild(box);
+        const hide = () => box.classList.add('hidden');
+        box.addEventListener('click', (e) => { if (e.target === box) hide(); });
+        box.querySelector('#lbClose').addEventListener('click', hide);
+        document.addEventListener('keydown', (e) => { if (!box.classList.contains('hidden') && e.key === 'Escape') hide(); });
+      }
+      return box;
+    }
+
+    // Discography
+    function ytId(url){ try { const u=new URL(url); if(u.hostname.includes('youtu.be')) return u.pathname.slice(1); const v=u.searchParams.get('v'); if(v) return v; const parts=u.pathname.split('/').filter(Boolean); return parts.pop(); } catch { return ''; } }
+    function renderDiscog({ scrollOnSelect = (window.innerWidth < 1024) } = {}){
+      const list = document.getElementById('discogList');
+      const iframe = document.getElementById('discogIframe');
+      const titleEl = document.getElementById('discogTitle');
+      const previewWrap = document.getElementById('discogPreview');
+      list.innerHTML = '';
+
+      discography.forEach((d,i)=>{
+        const li = el('li','rounded-xl border border-white/20 bg-white/70 hover:bg-white/80 transition text-slate-900');
+        const btn = el('button','w-full text-left px-3 py-2 rounded-xl');
+        const top = el('div','text-[10px] uppercase tracking-wide text-slate-500'); top.textContent = d.type;
+        const name = el('div','text-sm font-semibold text-slate-900'); name.textContent = d.title;
+        btn.append(top, name); li.append(btn); list.append(li);
+        btn.addEventListener('click', ()=> select(i, true));
+      });
+
+      function select(i, userClick = false){
+        const d = discography[i]; const id = ytId(d.url);
+        iframe.src = id ? `https://www.youtube.com/embed/${id}` : d.url;
+        titleEl.textContent = d.title;
+
+        [...list.children].forEach((li, idx) => {
+          const isActive = idx === i;
+          li.classList.toggle('bg-white', isActive);
+          li.classList.toggle('bg-white/70', !isActive);
+          li.classList.toggle('ring-1', isActive);
+          li.classList.toggle('ring-slate-300', isActive);
+          li.classList.toggle('border-slate-200', isActive);
+          li.classList.toggle('border-white/20', !isActive);
+        });
+
+        if (userClick && scrollOnSelect) { previewWrap.scrollIntoView({ behavior:'smooth', block:'start' }); }
+      }
+      select(0, false);
+    }
+
+    // Gallery (unchanged logic, packaged)
+    function aspectClassByWH(w, h) {
+      if (!w || !h) return 'aspect-[3/4]';
+      const r = w / h;
+      if (r > 1.15) return 'aspect-video';
+      if (r < 0.9)  return 'aspect-[3/4]';
+      return 'aspect-square';
+    }
+    let gi = 0, autoTimer = null, isHover = false;
+    function renderThumbs() {
+      const t = document.getElementById('thumbs'); t.innerHTML = '';
+      gallery.forEach((src, i) => {
+        const b = el('button', 'rounded-md overflow-hidden border ' + (i === gi ? 'border-slate-900' : 'border-slate-300'));
+        const box = el('div', 'aspect-square w-full'); const im  = el('img', 'h-full w-full object-cover object-center');
+        im.src = src; im.alt = 'thumb ' + (i + 1); b.append(box); box.append(im);
+        b.addEventListener('click', () => { gi = i; updateMain(true); });
+        t.append(b);
+      });
+    }
+    function updateMain(stopAuto) {
+      const main   = document.getElementById('galleryMain');
+      const wrap   = document.getElementById('galleryAspect');
+      const src    = gallery[gi];
+      const probe = new Image();
+      probe.onload = () => {
+        wrap.classList.remove('aspect-[3/4]', 'aspect-video', 'aspect-square');
+        wrap.classList.add(aspectClassByWH(probe.naturalWidth, probe.naturalHeight));
+        main.src = src; main.alt = 'NexT1DE Gallery ' + (gi + 1);
+        renderThumbs(); if (stopAuto) restartAuto();
+      };
+      probe.onerror = () => { main.src = src; renderThumbs(); if (stopAuto) restartAuto(); };
+      probe.src = src;
+    }
+    function prev(){ gi = (gi - 1 + gallery.length) % gallery.length; updateMain(true); }
+    function next(){ gi = (gi + 1) % gallery.length; updateMain(true); }
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    prevBtn.addEventListener('click', prev);
+    nextBtn.addEventListener('click', next);
+    const area = document.getElementById('galleryArea');
+    let touchX = null;
+    area.addEventListener('touchstart', (e) => { touchX = e.touches[0].clientX; showButtonsTemporarily(); });
+    area.addEventListener('touchend',   (e) => { if (touchX == null) return; const dx = e.changedTouches[0].clientX - touchX; if (Math.abs(dx) > 40) { dx > 0 ? prev() : next(); } touchX = null; });
+    area.addEventListener('mouseenter', ()=>{ isHover = true;  restartAuto(); });
+    area.addEventListener('mouseleave', ()=>{ isHover = false; restartAuto(); });
+    area.addEventListener('click', showButtonsTemporarily);
+    function showButtonsTemporarily(){ prevBtn.classList.remove('opacity-0'); nextBtn.classList.remove('opacity-0'); setTimeout(()=>{ if(!isHover){ prevBtn.classList.add('opacity-0'); nextBtn.classList.add('opacity-0'); } }, 1200); }
+    function restartAuto(){ if(autoTimer) clearInterval(autoTimer); if(!isHover){ autoTimer = setInterval(()=> next(), 4000); } }
+
+    // Language switching
+    function applyLangTexts(){ document.querySelectorAll('[data-i18n]').forEach(elm=>{ const key=elm.getAttribute('data-i18n'); const pack=i18n[currentLang]; if(pack && pack[key]) elm.textContent = pack[key]; }); }
+    function setLang(code){
+      const keepY = window.scrollY;
+      currentLang = code;
+
+      document.querySelectorAll('#langButtons button[data-lang], #langButtonsMobile button[data-lang]')
+        .forEach(btn => btn.setAttribute('aria-pressed', String(btn.getAttribute('data-lang') === code)));
+
+      applyLangTexts();
+      applyAboutContent(code);              // <<-- เพิ่มบรรทัดนี้
+
+      renderAvatarStrip();
+      renderMembers();
+      renderDiscog({ scrollOnSelect: false });
+      window.scrollTo({ top: keepY });
+    }
+
+
+    // Init
+    function init(){
+      // bind hamburger
+      const hamBtn = document.getElementById('hamburgerBtn');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const iconOpen = document.getElementById('iconOpen');
+      const iconClose = document.getElementById('iconClose');
+
+      hamBtn.addEventListener('click', () => {
+        const open = mobileMenu.classList.contains('hidden');
+        mobileMenu.classList.toggle('hidden', !open);
+        hamBtn.setAttribute('aria-expanded', String(open));
+        iconOpen.classList.toggle('hidden', open);
+        iconClose.classList.toggle('hidden', !open);
+      });
+
+      // close mobile menu on nav click
+      mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+        hamBtn.setAttribute('aria-expanded', 'false');
+        iconOpen.classList.remove('hidden');
+        iconClose.classList.add('hidden');
+      }));
+
+      // language events (desktop + mobile)
+      document.querySelectorAll('#langButtons button[data-lang], #langButtonsMobile button[data-lang]')
+        .forEach(btn => btn.addEventListener('click', ()=> setLang(btn.getAttribute('data-lang'))));
+
+      renderAvatarStrip();
+      renderMembers();
+      renderDiscog();
+      updateMain(false); // gallery
+      applyLangTexts();
+      applyAboutContent('th');   // เติมค่าเริ่มภาษาไทย
+      setLang('th');
+      restartAuto();
+    }
+    init();
+
+    (function () {
+      const nav = document.getElementById('siteNav');
+      if (!nav) return;
+
+      function applyNavStyle() {
+        const atTop = window.scrollY <= 8; // ยืดหยุ่นนิดหน่อย กันเด้ง
+        // สภาพโปร่งใส (ทับรูปปก)
+        nav.classList.toggle('bg-transparent',  atTop);
+        nav.classList.toggle('backdrop-blur-0', atTop);
+        nav.classList.toggle('border-transparent', atTop);
+
+        // สภาพกระจกเบลอ (ตอนสกรอล)
+        nav.classList.toggle('bg-black/40',  !atTop);
+        nav.classList.toggle('backdrop-blur-md', !atTop);
+        nav.classList.toggle('border-white/20', !atTop);
+        nav.classList.toggle('border-b', !atTop);
+      }
+
+      // เรียกครั้งแรก และอัปเดตเมื่อสกรอล/รีไซซ์
+      applyNavStyle();
+      window.addEventListener('scroll', applyNavStyle, { passive: true });
+      window.addEventListener('resize', applyNavStyle);
+      window.addEventListener('load', applyNavStyle);
+    })();
+
+    // (เดิมมีตัวเรียกใช้ #langSelect ซึ่งไม่มีใน DOM ทำให้ error — ผมลบออกแล้ว)
+  </script>
+</body>
+</html>
