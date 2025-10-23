@@ -41,6 +41,12 @@
     #aboutDebut li {
       line-height: 1.6;
     }
+    #member-strip {
+      scroll-margin-top: 88px;
+    }
+    @media (min-width: 768px) {
+      #member-strip { scroll-margin-top: 96px; }
+    }
 
   </style>
 </head>
@@ -59,7 +65,7 @@
       <!-- Desktop nav -->
       <div class="hidden md:flex items-center gap-4 text-sm">
         <a href="#about"   class="hover:opacity-90 px-2" data-i18n="nav_about">ข้อมูลวง</a>
-        <a href="#members" class="hover:opacity-90 px-2" data-i18n="nav_members">สมาชิก</a>
+        <a href="#member-strip" class="hover:opacity-90 px-2" data-i18n="nav_members">สมาชิก</a>
         <a href="#discog"  class="hover:opacity-90 px-2" data-i18n="nav_discog">ผลงานเพลง</a>
         <a href="#gallery" class="hover:opacity-90 px-2" data-i18n="nav_gallery">แกลเลอรี</a>
 
@@ -91,7 +97,7 @@
       <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-3 text-sm">
         <div class="flex flex-col gap-2">
           <a href="#about"   class="px-2 py-2 rounded-lg hover:bg-white/10" data-i18n="nav_about">ข้อมูลวง</a>
-          <a href="#members" class="px-2 py-2 rounded-lg hover:bg-white/10" data-i18n="nav_members">สมาชิก</a>
+          <a href="#member-strip" class="px-2 py-2 rounded-lg hover:bg-white/10" data-i18n="nav_members">สมาชิก</a>
           <a href="#discog"  class="px-2 py-2 rounded-lg hover:bg-white/10" data-i18n="nav_discog">ผลงานเพลง</a>
           <a href="#gallery" class="px-2 py-2 rounded-lg hover:bg-white/10" data-i18n="nav_gallery">แกลเลอรี</a>
         </div>
@@ -617,13 +623,38 @@
       return w;
     }
 
-    function scrollToWithOffset(elOrId, offset){
+    function scrollToWithOffset(elOrId, extra = 12) {
       const el = typeof elOrId === 'string' ? document.getElementById(elOrId) : elOrId;
-      if(!el) return;
+      if (!el) return;
       const nav = document.getElementById('siteNav');
-      const off = typeof offset === 'number' ? offset : ((nav?.offsetHeight || 64) + 8);
-      const y = el.getBoundingClientRect().top + window.scrollY - off;
+      const offset = (nav?.offsetHeight || 64) + extra; // กันบังอีกนิด
+      const y = el.getBoundingClientRect().top + window.scrollY - offset;
       window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+
+    // ให้ลิงก์ "สมาชิก" พาไป member-strip พร้อม offset และปิดเมนูมือถือ
+    function bindMembersLinkScroll() {
+      const targets = document.querySelectorAll('a[href="#members"], a[data-i18n="nav_members"]');
+      const memberStrip = document.getElementById('member-strip');
+      const hamBtn = document.getElementById('hamburgerBtn');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const iconOpen  = document.getElementById('iconOpen');
+      const iconClose = document.getElementById('iconClose');
+
+      targets.forEach(a => {
+        a.addEventListener('click', (e) => {
+          e.preventDefault();
+          if (memberStrip) scrollToWithOffset(memberStrip, 12);
+
+          // ปิดเมนูมือถือถ้าเปิดอยู่
+          if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+            mobileMenu.classList.add('hidden');
+            hamBtn?.setAttribute('aria-expanded','false');
+            iconOpen?.classList.remove('hidden');
+            iconClose?.classList.add('hidden');
+          }
+        });
+      });
     }
 
     // ช่วยฟอร์แมตลิสต์ให้เป็น "A / B / C"
@@ -972,6 +1003,7 @@
       applyAboutContent('th');   // เติมค่าเริ่มภาษาไทย
       setLang('th');
       restartAuto();
+      bindMembersLinkScroll();
     }
     init();
 
