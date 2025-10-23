@@ -213,9 +213,9 @@
   </section>
 
   <!-- MEMBERS -->
-  <section id="members" class="mx-auto max-w-6xl px-5 sm:px-8 lg:px-12 py-10 anchor shadow">
-    <div id="membersGrid" class="grid grid-cols-1 lg:grid-cols-2 gap-6"></div>
-  </section>
+    <section id="members" class="mx-auto max-w-6xl px-5 sm:px-8 lg:px-12 py-10 anchor">
+      <div id="membersGrid" class="grid grid-cols-1 gap-6"></div>
+    </section>
 
   <!-- DISCOGRAPHY -->
   <section id="discog" class="mx-auto max-w-6xl px-5 sm:px-8 lg:px-12 py-10 anchor">
@@ -657,40 +657,53 @@
         const card = el('article','overflow-hidden rounded-2xl border border-white/40 bg-white/10 backdrop-blur-md shadow-xl');
         card.id = `member-${m.id}`;
 
-        // มือถือ = 1 คอล์มน์, เดสก์ท็อป = 2 คอล์มน์ "รูปซ้าย/ข้อมูลขวา"
-        const wrap = el('div','grid grid-cols-1 lg:grid-cols-[2fr_3fr]');
+        // mobile: 1 คอลัมน์, md+: 2 คอลัมน์
+        const wrap = el('div','grid grid-cols-1 md:grid-cols-[2fr_3fr]');
 
-        // ===== LEFT: IMAGE (ซ้ายบนเดสก์ท็อป) =====
+        // ===== LEFT: IMAGE =====
         const imgBox = el('div','p-3 md:p-4 order-1');
-        const ratio  = el('div','aspect-[2/3] w-full overflow-hidden rounded-xl bg-white/60');
+        // ใช้ aspect บนมือถือ และโค้งซ้ายบน/ล่างบน md+
+        const ratio  = el('div','relative w-full overflow-hidden rounded-xl bg-white/60 aspect-[2/3] md:h-full md:aspect-auto md:rounded-l-2xl md:rounded-r-none');
         const btn    = el('button','relative w-full h-full group'); btn.type='button';
         btn.setAttribute('aria-label', `ดูภาพ ${stage}`);
+
         const img    = el('img','h-full w-full object-cover object-center transition-transform duration-200 group-hover:scale-[1.05]');
         img.src = m.image; img.alt = stage + ' portrait';
+
         const zoom   = el('div','pointer-events-none absolute bottom-2 right-2 rounded-md bg-black/40 text-white text-[11px] px-2 py-1 opacity-0 group-hover:opacity-100 transition');
         zoom.textContent = 'คลิกเพื่อขยาย';
+
         btn.append(img, zoom); ratio.append(btn); imgBox.append(ratio);
         btn.addEventListener('click', () => { lbImg.src = m.image; lbImg.alt = stage + ' preview'; lightbox.classList.remove('hidden'); });
 
-        // ===== RIGHT: CONTENT =====
-        const content = el('div','bg-white/85 text-slate-900 p-5 md:p-7 flex flex-col gap-4 order-2');
+        // ===== RIGHT: CONTENT (พื้นหลังสูงเต็มการ์ด + scroll ภายในถ้ายาวเกิน) =====
+        const content = el('div','bg-white/85 text-slate-900 p-5 md:p-7 flex flex-col gap-4 order-2 overflow-y-auto');
+        content.style.maxHeight = '100%';
+
         const head = el('div','flex flex-col gap-1');
         const title = el('h3','text-2xl md:text-3xl font-extrabold leading-tight'); 
         title.textContent = loc.shortname ? `${loc.shortname} · ${stage}` : stage;
         const sub   = el('p','text-sm text-slate-700'); sub.textContent = fullname;
         head.append(title, sub);
 
-        // chips เมตาดาต้า
+        // Chips
         const chipsRow = el('div','flex flex-wrap items-center gap-2');
+        const chip = (label, value)=>{
+          if(!value) return null;
+          const w = el('span','chip inline-flex items-center gap-1 rounded-full border border-slate-300 bg-white px-2 py-1 text-[11px] text-slate-700');
+          const b = el('span','font-medium'); b.textContent = label + ':';
+          const v = el('span'); v.textContent = value;
+          w.append(b,v); return w;
+        };
         [
-          chip('' + (mLabel.position?.[currentLang] || 'Position'), position),
-          chip('' + (mLabel.nationality?.[currentLang] || 'Nationality'), nationality),
-          chip('' + (mLabel.height?.[currentLang] || 'Height'), height),
-          chip('' + (mLabel.bloodType?.[currentLang] || 'Blood Type'), bloodType),
+          chip(mLabel.position?.[currentLang] || 'Position', position),
+          chip(mLabel.nationality?.[currentLang] || 'Nationality', nationality),
+          chip(mLabel.height?.[currentLang] || 'Height', height),
+          chip(mLabel.bloodType?.[currentLang] || 'Blood Type', bloodType),
           chip('MBTI', mbti)
         ].forEach(c => c && chipsRow.append(c));
 
-        // รายละเอียด (ไม่มี bullet ใช้ / คั่น)
+        // Info list
         const dl = el('dl','grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-sm');
         const infoItem = (label, value) => {
           const d = el('div');
@@ -698,6 +711,7 @@
           const v = el('div','text-slate-900 leading-relaxed'); v.textContent = value && String(value).trim() ? value : '-';
           d.append(l,v); return d;
         };
+        const slashList = (v)=> !v ? '' : String(v).split(',').map(s => s.trim()).filter(Boolean).join(' / ');
 
         dl.append(
           infoItem(mLabel.birthday?.[currentLang] || 'Birthday', fmtDate(m.birthday)),
@@ -708,19 +722,56 @@
           infoItem(mLabel.favoriteFood?.[currentLang]   || 'Favorite Food',   slashList(loc.favoriteFood)),
         );
 
-        // socials
         const socials = el('div','flex flex-wrap items-center gap-2 pt-1');
         m.socials.forEach(s => socials.append(socialItem(s)));
 
         content.append(head, chipsRow, dl, socials);
 
-        // ประกอบ
         wrap.append(imgBox, content);
         card.append(wrap);
         grid.append(card);
+
+        // จับความสูงของรูปแล้วตั้งความสูงให้ content เท่ากัน
+        const syncHeights = () => {
+          if (window.innerWidth < 768) {
+            content.style.height = '';
+            return;
+          }
+          const imgH = imgBox.offsetHeight;
+          content.style.height = imgH + 'px';
+        };
+        window.addEventListener('resize', syncHeights);
+        setTimeout(syncHeights, 200);
+        if (img.complete) syncHeights();
+        else img.onload = syncHeights;
       });
     }
 
+
+
+    function syncMemberHeights(card){
+      const imgWrap = card.querySelector('.js-imgwrap');
+      const content = card.querySelector('.js-content');
+      if(!imgWrap || !content) return;
+
+      // ใช้เฉพาะ md+ (>=768px): ให้ content สูงเท่าภาพและ scroll ภายใน
+      const isMdUp = window.matchMedia('(min-width: 768px)').matches;
+      if (isMdUp){
+        const h = imgWrap.getBoundingClientRect().height;
+        content.style.maxHeight = h ? (h + 'px') : '';
+        content.style.overflowY = 'auto';
+      } else {
+        // mobile: ปล่อยตามธรรมชาติ
+        content.style.maxHeight = '';
+        content.style.overflowY = '';
+      }
+    }
+
+    // debounce กัน resize ยิงถี่
+    function debounce(fn, wait=120){
+      let t; 
+      return (...args)=>{ clearTimeout(t); t=setTimeout(()=>fn.apply(null,args), wait); };
+    }
 
 
     // Member lightbox (one-time)
